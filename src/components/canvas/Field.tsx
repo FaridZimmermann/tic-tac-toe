@@ -1,8 +1,16 @@
 
+import "./Field.css";
 
-export default function Field() {
+
+
+//Type Declarations
+type FieldProps = {
+    value: number
+}
+
+export default function Field({value}: FieldProps) {
 
     return (
-        <div className="field"></div>
+        <button className="field">{value}</button>
     )
 }
