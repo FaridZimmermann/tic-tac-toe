@@ -1,3 +1,7 @@
 .field {
     margin: 0.1rem;
 }
+
+.empty {
+    color:#1a1a1a;
+}
