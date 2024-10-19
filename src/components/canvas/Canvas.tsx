@@ -13,8 +13,18 @@ export default function Canvas() {
     const [canvas, setCanvas] = useState(CANVAS);
     const [currentPlayer, setCurrentPlayer] = useState(1);
 
-  function handleFieldClick(key: string) {
-        console.log(key)
+  function handleFieldClick(position: Array<number>) {
+
+        const [i, j] = position;
+
+        let copyCanvas: number[][] = canvas.map(row => [...row]);
+        if (!copyCanvas[i][j]) {
+            
+        copyCanvas[i][j] = currentPlayer;
+
+        setCanvas(copyCanvas);
+        setCurrentPlayer(currentPlayer === 1 ? 2 : 1);
+        } 
     }
 
     return(

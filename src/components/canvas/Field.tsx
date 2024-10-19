@@ -7,7 +7,7 @@ import "./Field.css";
 type FieldProps = {
     value: number,
     onFieldClick: (key: string) => void,
-    position: Array<Number>
+    position: Array<number>
 }
 
 export default function Field({value, position, onFieldClick}: FieldProps) {
