@@ -28,5 +28,6 @@ function hasThreeInRow(arr: number[][], currentPlayer: number) : boolean {
 
 
 export default function checkGameState(canvas: number[][], currentPlayer: number): boolean {
+    console.log(canvas, currentPlayer)
     return hasThreeInRow(canvas, currentPlayer) || hasThreeInRow(transformArray(canvas), currentPlayer) || hasThreeInRow(extractDiagonals(canvas), currentPlayer);
 }

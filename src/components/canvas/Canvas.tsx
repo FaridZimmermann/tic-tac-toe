@@ -1,5 +1,5 @@
 
-import {useState} from "react";
+import {useState, useEffect} from "react";
 
 
 import Field from "./Field";
@@ -13,7 +13,7 @@ import checkGameState from "../../helpers/checkGameState";
 //Type Declarations
 type CanvasProps = {
     gameState: boolean,
-    endGame: () => void,
+    endGame: () => void
 }
 
 
@@ -26,16 +26,20 @@ export default function Canvas({gameState, endGame}) : CanvasProps {
     const [currentPlayer, setCurrentPlayer] = useState(1);
 
 
-
-
-    function handleCheckGameState() {
+    useEffect(() => {
         if (checkGameState(canvas, currentPlayer)) {
+            endGame(currentPlayer);
+        } else {
+            setCurrentPlayer(currentPlayer === 1 ? 2 : 1);
 
         }
-    }
+
+    }, [canvas]);
+
+
 
   function handleFieldClick(position: Array<number>) {
-
+    if (gameState) {
         const [i, j] = position;
 
         let copyCanvas: number[][] = canvas.map(row => [...row]);
@@ -44,8 +48,8 @@ export default function Canvas({gameState, endGame}) : CanvasProps {
         copyCanvas[i][j] = currentPlayer;
 
         setCanvas(copyCanvas);
-        setCurrentPlayer(currentPlayer === 1 ? 2 : 1);
-        } 
+    }
+}
     }
 
 
