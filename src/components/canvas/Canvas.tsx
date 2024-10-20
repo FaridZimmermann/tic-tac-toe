@@ -13,14 +13,15 @@ import checkGameState from "../../helpers/checkGameState";
 //Type Declarations
 type CanvasProps = {
     gameState: boolean,
-    endGame: () => void
+    endGame: () => void,
+    clearCanvas:boolean
 }
 
 
 let CANVAS = [[0, 0, 0], [0, 0, 0], [0, 0, 0]];
 
 
-export default function Canvas({gameState, endGame}) : CanvasProps {
+export default function Canvas({gameState, endGame, clearCanvas}) : CanvasProps {
 
     const [canvas, setCanvas] = useState(CANVAS);
     const [currentPlayer, setCurrentPlayer] = useState(1);
@@ -35,6 +36,12 @@ export default function Canvas({gameState, endGame}) : CanvasProps {
         }
 
     }, [canvas]);
+
+    useEffect(() => {
+        if (clearCanvas) {
+            setCanvas(CANVAS);
+        }
+    }, [clearCanvas])
 
 
 

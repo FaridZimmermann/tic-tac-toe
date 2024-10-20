@@ -16,10 +16,11 @@ function App() {
 
   return (
     <>
-    {winner !== "0" && <p>{`Player ${winner} won the party`}</p>}
+    {winner && <p>{`Player ${winner} won the party`}</p>}
+    {winner ? <button onClick={() => setWinner("")}>Reset</button> : <button onClick={() => setGameState(!gameState)}>Start/Stop Game</button>}
 
-     <button onClick={() => setGameState(!gameState)}>Start/Stop Game</button>
-     <Canvas gameState={gameState} endGame={handleEndGame}/>
+
+     <Canvas gameState={gameState} endGame={handleEndGame} clearCanvas={!(!winner)}/>
     </>
   )
 }
