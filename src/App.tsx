@@ -6,10 +6,12 @@ import './App.css'
 
 function App() {
 
+  const [gameState, setGameState] = useState(false);
+
   return (
     <>
-     <p>Works</p>
-     <Canvas />
+     <button onClick={() => setGameState(!gameState)}>Start/Stop Game</button>
+     <Canvas gameState={gameState} endGame={() => setGameState(false)}/>
     </>
   )
 }

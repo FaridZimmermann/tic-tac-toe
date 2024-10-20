@@ -6,7 +6,7 @@ import "./Field.css";
 //Type Declarations
 type FieldProps = {
     value: number,
-    onFieldClick: (key: string) => void,
+    onFieldClick: (position: Array<number>) => void,
     position: Array<number>
 }
 
