@@ -5,9 +5,9 @@ import Canvas from './components/canvas/Canvas';
 import './App.css'
 
 function App() {
-
-  const [gameState, setGameState] = useState(false);
-  const [winner, setWinner] = useState("");
+  const [gameMode, setGameMode] = useState(0)  //GameMode state, 0 refers to playing against computer opponent, 1 refers to playing in multiplayer mode
+  const [gameState, setGameState] = useState(false);  //State to track whether game is currently running or paused/stopped
+  const [winner, setWinner] = useState("");   //Tracks the winner of the last party
 
  function handleEndGame(player: number) {
     setGameState(false);
