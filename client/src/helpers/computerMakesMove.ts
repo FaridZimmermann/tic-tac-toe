@@ -14,7 +14,19 @@ function hasTwoInRow(arr: number[][], currentPlayer: number) : boolean {
     return arr.filter(row => row.filter(field => field === currentPlayer).length === 2).length > 0;
 }
 
-function determineBestMove(arr: number[][], player, opponent): number[] {
+function checkRow(arr: number[][], player:number, total: number): number[] {
+    //Checks if a given row totals to a specific amount of player symbols
+    for (let x = 0; x < arr.length; x++) {
+        let row = arr[x];
+        if (row.filter(field => field === player).length === total) {
+                return [x, row.indexOf(0)];
+        }
+    }
+
+    return [5, 5];
+}
+
+function determineBestMove(arr: number[][], player:number, opponent:number): number[] {
     //Determines best move to make
     /*  
         Definitions:
@@ -28,14 +40,48 @@ function determineBestMove(arr: number[][], player, opponent): number[] {
     let i, j;
 
     //Best Move
-        
-    
+
+     [i, j] = checkRow(arr, player, 2);
+     if (JSON.stringify([i, j]) !== JSON.stringify([5, 5])) {
+
+        return [i, j];
+     }
+
+     //Semi-best move
+
+     [i, j] = checkRow(arr, opponent, 2);
+     if (JSON.stringify([i, j]) !== JSON.stringify([5, 5])) {
+        return [i, j];
+     }
+
+
+     //Third-best move
+
+     [i, j] = checkRow(arr, player, 1);
+     if (JSON.stringify([i, j]) !== JSON.stringify([5, 5])) {
+        return [i, j];
+     }
+
+     //Fourth-best move
+     [i, j] = checkRow(arr, opponent, 1);
+     if (JSON.stringify([i, j]) !== JSON.stringify([5, 5])) {
+        return [i, j];
+     }
+
+     //No best move edge case
+
+
+     [i, j] = [createRandomIndex(), createRandomIndex()];
+
+     while (!fieldIsAvailable(arr, i, j)) {
+         [i, j] = [createRandomIndex(), createRandomIndex()];
+     }
 
 
 
     return [i, j];
-    
-    
+
+
 }
 
 
