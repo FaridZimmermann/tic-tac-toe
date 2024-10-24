@@ -19,7 +19,7 @@ export function extractDiagonals(arr: number[][]) : number[][] {
     return [[arr[0][0], arr[1][1], arr[2][2]], [arr[0][2], arr[1][1], arr[2][0]]];
 }
 
-function hasThreeInRow(arr: number[][], currentPlayer: number) : boolean {
+export function hasThreeInRow(arr: number[][], currentPlayer: number) : boolean {
     //Function to check if a two-dimensional array has three of the same number(currentPlayer) in a row
     return arr.filter(row => row.filter(field => field === currentPlayer).length === 3).length > 0;
 }
