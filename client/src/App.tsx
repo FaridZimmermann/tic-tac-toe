@@ -1,6 +1,7 @@
 import { useState } from 'react'
 
 import Canvas from './components/canvas/Canvas';
+import Menu from "./components/menu/Menu";
 
 import './App.css'
 
@@ -16,9 +17,11 @@ function App() {
 
   return (
     <>
+       <Menu />
     {winner && <p>{`Player ${winner} won the party`}</p>}
     {winner ? <button onClick={() => setWinner("")}>Reset</button> : <button onClick={() => setGameState(!gameState)}>Start/Stop Game</button>}
 
+ 
 
      <Canvas gameState={gameState} endGame={handleEndGame} clearCanvas={!(!winner)}/>
     </>
