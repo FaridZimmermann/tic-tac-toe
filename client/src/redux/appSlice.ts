@@ -4,13 +4,18 @@ import type { PayloadAction } from '@reduxjs/toolkit'
 export interface AppState {
   gameMode: number,
   gameRunning: boolean,
-  winner: string
+  winner: string,
+  currentPlayer: number,
+  canvas: number[][]
 }
 
 const initialState: AppState = {
     gameMode: 0,
     gameRunning: false,
-    winner: ""
+    winner: "",
+    currentPlayer: 0,
+    canvas:[[0, 0, 0], [0, 0, 0], [0, 0, 0]]
+    
   }
 
   export const appSlice = createSlice({
@@ -33,6 +38,13 @@ const initialState: AppState = {
         state.winner = "";
         state.gameRunning = false;
 
+      },
+      togglePlayer: state => {
+        state.currentPlayer = state.currentPlayer ? 0 : 1;
+      },
+      updateCanvas: (state, action: PayloadAction<Array<number>>) => {
+        const [i, j] = action.payload;
+        state[i][j] = state.currentPlayer;
       }
     }
   })
