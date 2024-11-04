@@ -12,7 +12,7 @@ import checkGameState from "../../helpers/checkGameState";
 
 //Type Declarations
 type CanvasProps = {
-    gameState: boolean,
+    gameRunning: boolean,
     endGame: () => void,
     clearCanvas:boolean
 }
@@ -21,7 +21,7 @@ type CanvasProps = {
 let CANVAS = [[0, 0, 0], [0, 0, 0], [0, 0, 0]];
 
 
-export default function Canvas({gameState, endGame, clearCanvas}) : CanvasProps {
+export default function Canvas({gameRunning, endGame, clearCanvas}) : CanvasProps {
 
     const [canvas, setCanvas] = useState(CANVAS);
     const [currentPlayer, setCurrentPlayer] = useState(1);
@@ -46,7 +46,7 @@ export default function Canvas({gameState, endGame, clearCanvas}) : CanvasProps 
 
 
   function handleFieldClick(position: Array<number>) {
-    if (gameState) {
+    if (gameRunning) {
         const [i, j] = position;
 
         let copyCanvas: number[][] = canvas.map(row => [...row]);

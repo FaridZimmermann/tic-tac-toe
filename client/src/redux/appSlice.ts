@@ -25,6 +25,9 @@ const initialState: AppState = {
       changeGameMode: (state, action: PayloadAction<number>) => {
         state.gameMode = action.payload
       },
+      toggleGameRunning: state => {
+        state.gameRunning = !state.gameRunning;
+      },
       startGame: state => {
         state.gameRunning = true
       },
@@ -49,8 +52,11 @@ const initialState: AppState = {
     }
   })
 
+  //Selector
+
+
   // Export the generated action creators for use in components
-export const { changeGameMode, startGame, endGame, setWinner, resetGame } = appSlice.actions
+export const { changeGameMode,toggleGameRunning, startGame, endGame, setWinner, resetGame } = appSlice.actions
 
 // Export the slice reducer for use in the store configuration
 export default appSlice.reducer
