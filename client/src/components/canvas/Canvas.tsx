@@ -1,50 +1,37 @@
 
 import {useState, useEffect} from "react";
+import {useSelector, useDispatch} from "react-redux";
+import  {updateCanvas} from "../../redux/appSlice";
 
 
 import Field from "./Field";
-
-import checkGameState from "../../helpers/checkGameState";
-
-
 
 
 
 //Type Declarations
 type CanvasProps = {
-    gameRunning: boolean,
-    endGame: () => void,
-    clearCanvas:boolean
+    gameRunning: boolean
 }
 
 
 let CANVAS = [[0, 0, 0], [0, 0, 0], [0, 0, 0]];
 
 
-export default function Canvas({gameRunning, endGame, clearCanvas}) : CanvasProps {
+export default function Canvas({gameRunning}) : CanvasProps {
 
-    const [canvas, setCanvas] = useState(CANVAS);
     const [currentPlayer, setCurrentPlayer] = useState(1);
+    const dispatch = useDispatch();
+    const canvas = useSelector((state) => state.app.canvas);
+    console.log("Canvas", canvas)
 
 
-    useEffect(() => {
-        if (checkGameState(canvas, currentPlayer)) {
-            endGame(currentPlayer);
-        } else {
-            setCurrentPlayer(currentPlayer === 1 ? 2 : 1);
-
+    function handleFieldClick(position: Array<number>) {
+        if (gameRunning) {
+            dispatch(updateCanvas(position));
         }
-
-    }, [canvas]);
-
-    useEffect(() => {
-        if (clearCanvas) {
-            setCanvas(CANVAS);
-        }
-    }, [clearCanvas])
-
-
-
+    }
+        
+/*
   function handleFieldClick(position: Array<number>) {
     if (gameRunning) {
         const [i, j] = position;
@@ -57,7 +44,7 @@ export default function Canvas({gameRunning, endGame, clearCanvas}) : CanvasProp
         setCanvas(copyCanvas);
     }
 }
-    }
+    } */
 
 
     return(

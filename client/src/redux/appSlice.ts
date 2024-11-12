@@ -1,5 +1,6 @@
 import { createAsyncThunk, createSlice } from '@reduxjs/toolkit'
 import type { PayloadAction } from '@reduxjs/toolkit'
+import checkGameState from '../helpers/checkGameState'
 
 export interface AppState {
   gameMode: number,
@@ -13,7 +14,7 @@ const initialState: AppState = {
     gameMode: 0,
     gameRunning: false,
     winner: "",
-    currentPlayer: 0,
+    currentPlayer: 1,
     canvas:[[0, 0, 0], [0, 0, 0], [0, 0, 0]]
     
   }
@@ -25,29 +26,45 @@ const initialState: AppState = {
       changeGameMode: (state, action: PayloadAction<number>) => {
         state.gameMode = action.payload
       },
+
       toggleGameRunning: state => {
         state.gameRunning = !state.gameRunning;
       },
+
       startGame: state => {
         state.gameRunning = true
       },
+
       endGame: state => {
         state.gameRunning = false
       },
+
       setWinner: (state, action: PayloadAction<string>) => {
         state.winner = action.payload
       },
+
       resetGame: state => {
         state.winner = "";
         state.gameRunning = false;
+        state.canvas = [[0, 0, 0], [0, 0, 0], [0, 0, 0]];
+      },
 
-      },
       togglePlayer: state => {
-        state.currentPlayer = state.currentPlayer ? 0 : 1;
+        state.currentPlayer = state.currentPlayer === 1 ? 2 : 1;
       },
+
       updateCanvas: (state, action: PayloadAction<Array<number>>) => {
         const [i, j] = action.payload;
-        state[i][j] = state.currentPlayer;
+        state.canvas[i][j] = state.currentPlayer;
+
+        if (checkGameState(state.canvas, state.currentPlayer)) {
+
+          state.gameRunning = false;
+          state.winner = `Player ${state.currentPlayer}`;
+
+        } else {
+          state.currentPlayer = state.currentPlayer === 1 ? 2 : 1;
+        }
       }
     }
   })
@@ -56,7 +73,7 @@ const initialState: AppState = {
 
 
   // Export the generated action creators for use in components
-export const { changeGameMode,toggleGameRunning, startGame, endGame, setWinner, resetGame } = appSlice.actions
+export const { changeGameMode,toggleGameRunning, updateCanvas, startGame, endGame, setWinner, resetGame } = appSlice.actions
 
 // Export the slice reducer for use in the store configuration
 export default appSlice.reducer
