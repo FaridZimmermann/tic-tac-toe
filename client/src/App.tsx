@@ -11,7 +11,8 @@ import './App.css'
 function App() {
   const winner = useSelector(state => state.app.winner);  //Tracks the winner of the last party
   const gameRunning = useSelector(state => state.app.gameRunning);
- 
+  const isMultiplayer = useSelector(state => state.app.isMultiplayer);
+  
   const dispatch = useDispatch();
 
 

@@ -3,28 +3,32 @@ import type { PayloadAction } from '@reduxjs/toolkit'
 import checkGameState from '../helpers/checkGameState'
 
 export interface AppState {
-  gameMode: number,
+  isMultiplayer: boolean,
   gameRunning: boolean,
   winner: string,
   currentPlayer: number,
-  canvas: number[][]
+  canvas: number[][],
+  difficulty: number
 }
 
 const initialState: AppState = {
-    gameMode: 0,
+    isMultiplayer: false,
     gameRunning: false,
     winner: "",
     currentPlayer: 1,
-    canvas:[[0, 0, 0], [0, 0, 0], [0, 0, 0]]
-    
+    canvas:[[0, 0, 0], [0, 0, 0], [0, 0, 0]],
+    difficulty: 0
   }
 
   export const appSlice = createSlice({
     name: 'app',
     initialState,
     reducers: {
-      changeGameMode: (state, action: PayloadAction<number>) => {
-        state.gameMode = action.payload
+      changeGameMode: (state, action: PayloadAction<boolean>) => {
+        state.isMultiplayer = action.payload;
+      },
+      changeGameDifficulty: (state, action: PayloadAction<number>) => {
+        state.difficulty = action.payload;
       },
 
       toggleGameRunning: state => {
@@ -73,7 +77,7 @@ const initialState: AppState = {
 
 
   // Export the generated action creators for use in components
-export const { changeGameMode,toggleGameRunning, updateCanvas, startGame, endGame, setWinner, resetGame } = appSlice.actions
+export const { changeGameMode, changeGameDifficulty, toggleGameRunning, updateCanvas, startGame, endGame, setWinner, resetGame } = appSlice.actions
 
 // Export the slice reducer for use in the store configuration
 export default appSlice.reducer

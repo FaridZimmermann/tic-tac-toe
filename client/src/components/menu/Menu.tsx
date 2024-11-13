@@ -1,6 +1,7 @@
 
-import {useState} from "react";
+import {useSelector, useDispatch} from "react-redux";
 
+import {changeGameMode, changeGameDifficulty} from "../../redux/appSlice";
 
 //Type Declarations
 type MenuProps = {
@@ -9,24 +10,25 @@ type MenuProps = {
 
 export default function Menu(props) {
 
-    const [difficulty, setDifficulty] = useState(0);
-    const [gameType, setGameType] = useState(0);
+    const isMultiplayer = useSelector(state => state.app.isMultiplayer);
+    const difficulty = useSelector(state => state.app.difficulty);
+    const dispatch = useDispatch(); 
 
     return (<>
         <div>
             <label>
                Computer 
-            <input type="checkbox" value={"0"} onChange={ e => setGameType(parseInt(e.target.value))} checked={gameType === 0}/>
+            <input type="checkbox" value={0} onChange={e => dispatch(changeGameMode(false))} checked={!isMultiplayer}/>
             </label>
             <label>
                Multiplayer 
-               <input type="checkbox" value={"1"} onChange={ e => setGameType(parseInt(e.target.value))} checked={gameType === 1}/>
+               <input type="checkbox" value={1} onChange={ e => dispatch(changeGameMode(true))} checked={isMultiplayer}/>
                </label>
         </div>
         <div>
             <label>
                 Difficulty
-            <input type="range" min="1" max="100" value={difficulty} onChange={e => setDifficulty(parseInt(e.target.value))} disabled={gameType === 1}/>
+            <input type="range" min="1" max="100" value={difficulty} onChange={e => dispatch(changeGameDifficulty(parseInt(e.target.value)))} disabled={isMultiplayer}/>
             </label>
         </div>
     </>)
