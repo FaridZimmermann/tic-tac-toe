@@ -52,29 +52,6 @@ function App() {
 
 
 
-  useEffect(() => {
-    socket.on("connect", () => {
-      console.log("Is Connected to socket")
-    })
-    socket.on("disconnect", () => {
-      console.log("Is disconnected to socket")
-    })
-    socket.on("foo", () => {
-      console.log("foo bar")
-    })
-    return () => {
-      socket.off('connect', () => {
-        console.log("Is Connected to socket")
-      });
-      socket.off('disconnect', () => {
-        console.log("Is disconnected to socket")
-      });
-      socket.off('foo', () => {
-        console.log("foo bar")
-      });
-    };
-  }, [])
-
   return (
     <>
       <Provider store={store}>
