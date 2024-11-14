@@ -1,14 +1,16 @@
 
+import React from "react";
 import {useSelector, useDispatch} from "react-redux";
 
 import {changeGameMode, changeGameDifficulty} from "../../redux/appSlice";
 
 //Type Declarations
-type MenuProps = {
-}
+interface SettingsMenuProps {
+  }
 
 
-export default function Menu(props) {
+
+const SettingsMenu: React.FC<SettingsMenuProps> = () => {
 
     const isMultiplayer = useSelector(state => state.app.isMultiplayer);
     const difficulty = useSelector(state => state.app.difficulty);
@@ -33,3 +35,5 @@ export default function Menu(props) {
         </div>
     </>)
 }
+
+export default SettingsMenu;

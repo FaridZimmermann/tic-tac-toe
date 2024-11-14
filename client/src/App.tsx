@@ -4,7 +4,7 @@ import {store} from "./redux/store";
 import { socket } from './socket/socket';
 import {toggleGameRunning, resetGame} from "./redux/appSlice";
 import Canvas from './components/canvas/Canvas';
-import Menu from "./components/menu/Menu";
+import SettingsMenu from "./components/menu/SettingsMenu";
 
 import './App.css'
 
@@ -12,17 +12,18 @@ function App() {
   const winner = useSelector(state => state.app.winner);  //Tracks the winner of the last party
   const gameRunning = useSelector(state => state.app.gameRunning);
   const isMultiplayer = useSelector(state => state.app.isMultiplayer);
-  
+
   const dispatch = useDispatch();
 
 
   useEffect(() => {
-    socket.connect();
-  
-    return () => {
-      socket.disconnect();
-    };
-  }, []);
+    if (isMultiplayer) {
+      socket.connect();
+      return () => {
+        socket.disconnect();
+      };
+    }
+  }, [isMultiplayer]);
 
   useEffect(() => {
     socket.on("connect", () => {
@@ -34,8 +35,6 @@ function App() {
     socket.on("foo", () => {
       console.log("foo bar")
     })
-
-
     return () => {
       socket.off('connect', () => {
         console.log("Is Connected to socket")
@@ -53,13 +52,14 @@ function App() {
     <>
       <Provider store={store}>
 
-          <Menu />
+          <SettingsMenu />
 
             {winner && <p>{`Player ${winner} won the party`}</p>}
             {winner ? <button onClick={() => dispatch(resetGame())}>Reset</button> : 
             <button onClick={() => dispatch(toggleGameRunning())}>Start/Stop Game</button>}
 
-          <Canvas gameRunning={gameRunning} />
+        {gameRunning &&  <Canvas gameRunning={gameRunning} />}
+         
 
       </Provider>
     </>

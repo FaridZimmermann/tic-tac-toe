@@ -1,5 +1,5 @@
 
-import {useState, useEffect} from "react";
+import React, {useState} from "react";
 import {useSelector, useDispatch} from "react-redux";
 import  {updateCanvas} from "../../redux/appSlice";
 
@@ -9,15 +9,14 @@ import Field from "./Field";
 
 
 //Type Declarations
-type CanvasProps = {
-    gameRunning: boolean
+interface CanvasProps {
+    gameRunning: boolean;
 }
 
 
 let CANVAS = [[0, 0, 0], [0, 0, 0], [0, 0, 0]];
 
-
-export default function Canvas({gameRunning}) : CanvasProps {
+const Canvas : React.FC<CanvasProps> = ({gameRunning}) => {
 
     const [currentPlayer, setCurrentPlayer] = useState(1);
     const dispatch = useDispatch();
