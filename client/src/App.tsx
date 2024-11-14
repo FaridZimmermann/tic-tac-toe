@@ -2,11 +2,13 @@ import { useEffect } from 'react'
 import {Provider, useSelector, useDispatch} from "react-redux";
 import {store} from "./redux/store";
 import { socket } from './socket/socket';
-import {toggleGameRunning, resetGame} from "./redux/appSlice";
+import {toggleGameRunning, resetGame, addConnectedUser, removeConnectedUser, addInitialUsers, User} from "./redux/appSlice";
 import Canvas from './components/canvas/Canvas';
 import SettingsMenu from "./components/menu/SettingsMenu";
 
 import './App.css'
+
+
 
 function App() {
   const winner = useSelector(state => state.app.winner);  //Tracks the winner of the last party
@@ -24,6 +26,31 @@ function App() {
       };
     }
   }, [isMultiplayer]);
+
+  useEffect(() => {
+    // Listen for updates on connected users
+    socket.on("userJoined", (user: User) => {
+      dispatch(addConnectedUser(user));
+    });
+    socket.on("userLeft", (user: User) => {
+      dispatch(removeConnectedUser(user.id));
+    })
+
+    socket.on("receiveConnectedUsers", (users: User[]) => {
+      dispatch(addInitialUsers(users))
+
+    })
+
+    // Fetch initial list of connected users
+    socket.emit("getConnectedUsers");
+
+    return () => {
+      socket.off("userJoined");
+      socket.off("userLeft");
+    };
+  }, [socket]);
+
+
 
   useEffect(() => {
     socket.on("connect", () => {

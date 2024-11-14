@@ -39,6 +39,10 @@ const initialState: AppState = {
         state.difficulty = action.payload;
       },
 
+      addInitialUsers: (state, action: PayloadAction<User[]>) => {
+        state.connectedUsers = action.payload;
+      },
+
       addConnectedUser: (state, action: PayloadAction<User>) => {
         state.connectedUsers.push(action.payload);
       },
@@ -93,7 +97,7 @@ const initialState: AppState = {
 
 
   // Export the generated action creators for use in components
-export const { changeGameMode, changeGameDifficulty, toggleGameRunning, updateCanvas, startGame, endGame, setWinner, resetGame, addConnectedUser, removeConnectedUser } = appSlice.actions
+export const { changeGameMode, changeGameDifficulty, toggleGameRunning, updateCanvas, startGame, endGame, setWinner, resetGame, addConnectedUser, removeConnectedUser, addInitialUsers } = appSlice.actions
 
 // Export the slice reducer for use in the store configuration
 export default appSlice.reducer
