@@ -14,14 +14,10 @@ interface CanvasProps {
 }
 
 
-let CANVAS = [[0, 0, 0], [0, 0, 0], [0, 0, 0]];
-
 const Canvas : React.FC<CanvasProps> = ({gameRunning}) => {
 
-    const [currentPlayer, setCurrentPlayer] = useState(1);
     const dispatch = useDispatch();
     const canvas = useSelector((state) => state.app.canvas);
-    console.log("Canvas", canvas)
 
 
     function handleFieldClick(position: Array<number>) {
@@ -30,21 +26,6 @@ const Canvas : React.FC<CanvasProps> = ({gameRunning}) => {
         }
     }
         
-/*
-  function handleFieldClick(position: Array<number>) {
-    if (gameRunning) {
-        const [i, j] = position;
-
-        let copyCanvas: number[][] = canvas.map(row => [...row]);
-        if (!copyCanvas[i][j]) {
-            
-        copyCanvas[i][j] = currentPlayer;
-
-        setCanvas(copyCanvas);
-    }
-}
-    } */
-
 
     return(
         <ul>
@@ -60,3 +41,5 @@ const Canvas : React.FC<CanvasProps> = ({gameRunning}) => {
         </ul>
     )
 }
+
+export default Canvas;
