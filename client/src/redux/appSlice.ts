@@ -2,13 +2,20 @@ import { createAsyncThunk, createSlice } from '@reduxjs/toolkit'
 import type { PayloadAction } from '@reduxjs/toolkit'
 import checkGameState from '../helpers/checkGameState'
 
+export interface User {
+  id: string;
+  name: string;
+}
+
+
 export interface AppState {
   isMultiplayer: boolean,
   gameRunning: boolean,
   winner: string,
   currentPlayer: number,
   canvas: number[][],
-  difficulty: number
+  difficulty: number,
+  connectedUsers: User[]
 }
 
 const initialState: AppState = {
@@ -17,7 +24,8 @@ const initialState: AppState = {
     winner: "",
     currentPlayer: 1,
     canvas:[[0, 0, 0], [0, 0, 0], [0, 0, 0]],
-    difficulty: 0
+    difficulty: 0,
+    connectedUsers: []
   }
 
   export const appSlice = createSlice({
@@ -29,6 +37,14 @@ const initialState: AppState = {
       },
       changeGameDifficulty: (state, action: PayloadAction<number>) => {
         state.difficulty = action.payload;
+      },
+
+      addConnectedUser: (state, action: PayloadAction<User>) => {
+        state.connectedUsers.push(action.payload);
+      },
+
+      removeConnectedUser: (state, action: PayloadAction<string>) => {
+        state.connectedUsers = state.connectedUsers.filter(user => user.id !== action.payload);
       },
 
       toggleGameRunning: state => {
@@ -77,7 +93,7 @@ const initialState: AppState = {
 
 
   // Export the generated action creators for use in components
-export const { changeGameMode, changeGameDifficulty, toggleGameRunning, updateCanvas, startGame, endGame, setWinner, resetGame } = appSlice.actions
+export const { changeGameMode, changeGameDifficulty, toggleGameRunning, updateCanvas, startGame, endGame, setWinner, resetGame, addConnectedUser, removeConnectedUser } = appSlice.actions
 
 // Export the slice reducer for use in the store configuration
 export default appSlice.reducer

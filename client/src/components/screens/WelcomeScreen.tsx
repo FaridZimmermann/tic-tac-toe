@@ -5,10 +5,10 @@ import {changeGameMode, changeGameDifficulty} from "../../redux/appSlice";
 
 
 interface WelcomeScreenProps {
-  title?: string;
 }
 
-const WelcomeScreen: React.FC<WelcomeScreenProps> = ({ title }) => {
+const WelcomeScreen: React.FC<WelcomeScreenProps> = () => {
+
     const dispatch = useDispatch(); 
 
   return (
@@ -16,7 +16,6 @@ const WelcomeScreen: React.FC<WelcomeScreenProps> = ({ title }) => {
       <h1>Welcome to Tic-Tac-Toe</h1>
       <h3>Choose your Game Mode</h3>
       <div>
-
         <button onClick={() => dispatch(changeGameMode(false))}>Against Computer Opponent</button>
         <button onClick={() => dispatch(changeGameMode(true))}>Multi-Player</button>
         </div>
