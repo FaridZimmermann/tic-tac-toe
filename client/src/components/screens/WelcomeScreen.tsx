@@ -1,6 +1,6 @@
 import React from 'react';
 import {useSelector, useDispatch} from "react-redux";
-import {changeGameMode, changeGameDifficulty} from "../../redux/appSlice";
+import {changeGameMode} from "../../redux/appSlice";
 
 import MultiplayerSelector from './MultiplayerSelector';
 import DifficultySelector from './DifficultySelector';
@@ -16,19 +16,18 @@ const WelcomeScreen: React.FC<WelcomeScreenProps> = () => {
   return (
     <div>
       <h1>Welcome to Tic-Tac-Toe</h1>
-      <h3>Choose your Game Mode</h3>
       <div>
-
         
-          {!gameMode ?
+          {!gameMode &&
             <>
+          <h3>Choose your Game Mode</h3>
             <button onClick={() => dispatch(changeGameMode(1))}>Against Computer Opponent</button>
             <button onClick={() => dispatch(changeGameMode(2))}>Multi-Player</button>
             </>
-            :
-           { gameMode === 1 ? <DifficultySelector /> : <MultiplayerSelector} }
+           }
+           {gameMode === 1 && <DifficultySelector /> }
+           {gameMode === 2 && <MultiplayerSelector />}
           
-
         </div>
     </div>
   );
