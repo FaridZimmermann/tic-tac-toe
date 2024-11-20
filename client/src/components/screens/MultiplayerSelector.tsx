@@ -1,14 +1,30 @@
 import React, { useState, useEffect } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
-import { User } from '../../redux/appSlice';
+import { User, addInitialUsers } from '../../redux/appSlice';
 import { RootState } from '../../redux/store';
+import { socket } from '../../socket/socket';
 
 
 
-interface Props {
-}
+interface Props {};
 
 const MultiplayerSelector: React.FC<Props> = () => {
+  const dispatch = useDispatch();
+
+  useEffect(() => {
+    socket.on("receiveConnectedUsers", (users: User[]) => {
+      dispatch(addInitialUsers(users))
+    })
+
+    // Fetch initial list of connected users
+    socket.emit("getConnectedUsers");
+
+    return () => {
+      socket.off("receiveConnectedUsers");
+    };
+
+
+  }, [socket]);
   const connectedUsers = useSelector((state: RootState) => state.app.connectedUsers);
 
   const handleUserClick = (user: User) => {

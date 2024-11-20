@@ -6,7 +6,7 @@ interface DifficultySelectorProps {
 }
 
 const DifficultySelector: React.FC<DifficultySelectorProps> = ({ }) => {
-    const [difficulty, setDifficulty] = useState(0);
+  const [difficulty, setDifficulty] = useState(0);
   const dispatch = useDispatch();
 
   const handleDifficultyChange = (event: React.ChangeEvent<HTMLInputElement>) => {

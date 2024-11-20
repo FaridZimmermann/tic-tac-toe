@@ -17,7 +17,7 @@ app.get("/", (req, res) => {
 io.on('connection', (socket) => {
     console.log('a user connected');
 
-    socket.on("foo", (arg) => {
+    socket.on("getConnectedUsers", (arg) => {
       console.log(arg);
     })
   });

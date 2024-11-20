@@ -9,31 +9,33 @@ export interface User {
 
 
 export interface AppState {
-  isMultiplayer: boolean,
+  gameMode: number | null,
   gameRunning: boolean,
   winner: string,
   currentPlayer: number,
   canvas: number[][],
   difficulty: number,
-  connectedUsers: User[]
+  connectedUsers: User[],
+  opponent: string | null
 }
 
 const initialState: AppState = {
-    isMultiplayer: false,
+    gameMode: null,
     gameRunning: false,
     winner: "",
     currentPlayer: 1,
     canvas:[[0, 0, 0], [0, 0, 0], [0, 0, 0]],
     difficulty: 0,
-    connectedUsers: []
+    connectedUsers: [],
+    opponent: null
   }
 
   export const appSlice = createSlice({
     name: 'app',
     initialState,
     reducers: {
-      changeGameMode: (state, action: PayloadAction<boolean>) => {
-        state.isMultiplayer = action.payload;
+      changeGameMode: (state, action: PayloadAction<number>) => {
+        state.gameMode = action.payload;
       },
       changeGameDifficulty: (state, action: PayloadAction<number>) => {
         state.difficulty = action.payload;
@@ -49,6 +51,10 @@ const initialState: AppState = {
 
       removeConnectedUser: (state, action: PayloadAction<string>) => {
         state.connectedUsers = state.connectedUsers.filter(user => user.id !== action.payload);
+      },
+
+      setOpponent: (state, action: PayloadAction<string>) => {
+        state.opponent = action.payload;
       },
 
       toggleGameRunning: state => {
