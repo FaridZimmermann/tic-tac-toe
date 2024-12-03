@@ -3,13 +3,17 @@ import { useDispatch, useSelector } from 'react-redux';
 import { User, addInitialUsers } from '../../redux/appSlice';
 import { RootState } from '../../redux/store';
 import { socket } from '../../socket/socket';
-
+import UserNameSelector from './UserNameSelector';
 
 
 interface Props {};
 
 const MultiplayerSelector: React.FC<Props> = () => {
   const dispatch = useDispatch();
+  const connectedUsers = useSelector((state: RootState) => state.app.connectedUsers);
+  const username = useSelector((state: RootState) => state.app.username);
+
+
 
   useEffect(() => {
     socket.on("receiveConnectedUsers", (users: User[]) => {
@@ -17,6 +21,7 @@ const MultiplayerSelector: React.FC<Props> = () => {
     })
 
     // Fetch initial list of connected users
+    console.log(socket)
     socket.emit("getConnectedUsers");
 
     return () => {
@@ -25,12 +30,13 @@ const MultiplayerSelector: React.FC<Props> = () => {
 
 
   }, [socket]);
-  const connectedUsers = useSelector((state: RootState) => state.app.connectedUsers);
 
   const handleUserClick = (user: User) => {
   };
 
   return (
+    <>
+    {username.length ? 
     <div>
       <h2>Connected Users:</h2>
       <ul>
@@ -41,6 +47,9 @@ const MultiplayerSelector: React.FC<Props> = () => {
         ))}
       </ul>
     </div>
+
+    :     <UserNameSelector />}
+    </>
   );
 };
 

@@ -5,7 +5,6 @@ import { socket } from './socket/socket';
 import {toggleGameRunning, resetGame, addConnectedUser, removeConnectedUser, addInitialUsers, User} from "./redux/appSlice";
 import WelcomeScreen from './components/screens/WelcomeScreen';
 import Canvas from './components/canvas/Canvas';
-import SettingsMenu from "./components/menu/SettingsMenu";
 
 import './App.css'
 
