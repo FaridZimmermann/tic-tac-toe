@@ -3,16 +3,15 @@ const app = express();
 const http = require('http');
 const server = http.createServer(app);
 const { Server } = require("socket.io");
-const {Redis} = require("ioredis");
-
-
-const redis = new Redis();
 
 const io = new Server(server, {
   cors: {
     origin: "http://localhost:5173"
   }
 });
+
+const userMap = {};
+
 
 
 app.get("/", (req, res) => {
@@ -25,15 +24,10 @@ io.on('connection', (socket) => {
     socket.on("getConnectedUsers", async (arg) => {
       const res = await io.fetchSockets()
 
-      console.log(res.map(async (socket) => {
-        
-        const userName = await redis.get(socket.id)
-        return userName;
-    }));
+      console.log(res.map( (socket) => userMap[socket.id]));
     })
 
     socket.on("setUsername", async (arg) => {
-      await redis.set(socket.id, arg);
 
     })
   });
