@@ -12,6 +12,11 @@ const io = new Server(server, {
 
 const userMap = {};
 
+async function getUserList() {
+  const res = await io.fetchSockets()
+  return res.map( (socket) => {return {name: userMap[socket.id], id: socket.id} }).filter(x => x !== undefined);
+}
+
 
 
 app.get("/", (req, res) => {
@@ -22,14 +27,19 @@ io.on('connection', (socket) => {
     console.log('a user connected');
 
     socket.on("getConnectedUsers", async (arg) => {
-      const res = await io.fetchSockets()
-
-      console.log(res.map( (socket) => userMap[socket.id]));
-    })
+      socket.emit("receiveConnectedUsers", getUserList());
+    });
 
     socket.on("setUsername", async (arg) => {
-
+      userMap[socket.id] = arg;
+      socket.emit("receiveConnectedUsers", getUserList());
     })
+
+    socket.on("disconnect", async (arg) => {
+      delete userMap[socket.id];
+      socket.emit("receiveConnectedUsers", getUserList());
+    })
+
   });
   
 
